@@ -21,8 +21,8 @@ export function GraveCard({ grave, isSelected, onClick }: GraveCardProps) {
           : `Plot ${grave.plotNumber}`
       }
       className={cn(
-        // Base tile — sky blue matching the image
-        "w-full text-center px-1 py-1.5 rounded-sm border transition-all duration-100",
+        // Base tile — fixed size, sky blue matching the image
+        "w-full h-[52px] text-center px-1 py-1 rounded-sm border transition-all duration-100 overflow-hidden flex flex-col items-center justify-center",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-1",
         isUnknown
           ? "bg-sky-200 border-sky-300 hover:bg-sky-300 hover:border-sky-400"

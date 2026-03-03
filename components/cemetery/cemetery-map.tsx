@@ -130,6 +130,8 @@ function GraveBlock({
                   style={{
                     width: 72,
                     minWidth: 72,
+                    maxWidth: 72,
+                    height: 52,
                     opacity: dimmed ? 0.25 : 1,
                   }}
                 >

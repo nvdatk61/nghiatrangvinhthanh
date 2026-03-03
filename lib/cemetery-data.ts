@@ -11,10 +11,11 @@ export interface GraveRecord {
     fullName: string;
     dateOfBirth: string;
     dateOfDeath: string;
-    age?: number;
     hometown?: string;
-    unit?: string;
+    enlistmentDate?: string;
     rank?: string;
+    deathPlace?: string;
+    unit?: string;
     epitaph?: string;
     biography?: string;
     familyContact?: {
@@ -28,7 +29,7 @@ export interface GraveRecord {
 // ─── LEFT BLOCK ────────────────────────────────────────────────────────────────
 // Row 1 (14 graves)
 const leftRow1: GraveRecord[] = [
-  { id:"L-R1-01", plotNumber:"01", block:"left", row:1, col:1,  status:"occupied", deceased:{ fullName:"Nguyễn Văn Hoà",     dateOfBirth:"", dateOfDeath:"26.01.1947" } },
+  { id:"L-R1-01", plotNumber:"01", block:"left", row:1, col:1,  status:"occupied", deceased:{ fullName:"Nguyễn Văn Hoà", dateOfBirth:"1923", dateOfDeath:"26.01.1947", hometown:"Phú Giã", enlistmentDate:"Chưa rõ", rank:"Trung đội trưởng", deathPlace:"Chưa rõ" } },
   { id:"L-R1-02", plotNumber:"02", block:"left", row:1, col:2,  status:"occupied", deceased:{ fullName:"Nguyễn Văn Lương",   dateOfBirth:"", dateOfDeath:"17.11.1947" } },
   { id:"L-R1-03", plotNumber:"03", block:"left", row:1, col:3,  status:"occupied", deceased:{ fullName:"Thân Văn Đức",       dateOfBirth:"", dateOfDeath:"10.1949" } },
   { id:"L-R1-04", plotNumber:"04", block:"left", row:1, col:4,  status:"occupied", deceased:{ fullName:"Trần Văn Thủ",       dateOfBirth:"", dateOfDeath:"1952" } },
