@@ -5,7 +5,7 @@
 
 :root {
   /* Stone/slate palette — dignified, respectful, clean */
-  --background: oklch(0.975 0.003 75);
+  --background: oklch(0.965 0.012 88);
   --foreground: oklch(0.18 0.008 255);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.18 0.008 255);
