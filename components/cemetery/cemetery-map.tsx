@@ -6,16 +6,24 @@ import { GraveCard } from "./grave-card";
 import { GraveDetailSheet } from "./grave-detail-sheet";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Search, TreePine, MapPin, Users } from "lucide-react";
+import { Search, TreePine } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const sections = ["All", "A", "B", "C", "D"];
+const SECTIONS = ["A", "B", "C", "D"] as const;
+
+// Section labels as they appear in the heading
+const SECTION_LABELS: Record<string, string> = {
+  A: "Section A — Garden of Rest",
+  B: "Section B — Hillside Grounds",
+  C: "Section C — Eastern Meadow",
+  D: "Section D — North Field",
+};
 
 export function CemeteryMap() {
   const [selectedGrave, setSelectedGrave] = useState<GraveRecord | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeSection, setActiveSection] = useState("All");
+  const [activeSection, setActiveSection] = useState<string>("All");
 
   const filtered = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
@@ -26,161 +34,129 @@ export function CemeteryMap() {
       const matchesSearch =
         g.plotNumber.toLowerCase().includes(q) ||
         g.deceased?.fullName.toLowerCase().includes(q) ||
-        g.deceased?.dateOfDeath.toLowerCase().includes(q);
+        g.id.toLowerCase().includes(q);
       return matchesSection && matchesSearch;
     });
   }, [searchQuery, activeSection]);
 
-  const stats = useMemo(() => {
-    const total = CEMETERY_DATA.length;
-    const occupied = CEMETERY_DATA.filter((g) => g.status === "occupied").length;
-    const available = CEMETERY_DATA.filter(
-      (g) => g.status === "available"
-    ).length;
-    const reserved = CEMETERY_DATA.filter((g) => g.status === "reserved").length;
-    return { total, occupied, available, reserved };
-  }, []);
+  const totalStats = useMemo(() => ({
+    occupied: CEMETERY_DATA.filter((g) => g.status === "occupied").length,
+    available: CEMETERY_DATA.filter((g) => g.status === "available").length,
+    reserved: CEMETERY_DATA.filter((g) => g.status === "reserved").length,
+  }), []);
 
   function handleGraveClick(grave: GraveRecord) {
     setSelectedGrave(grave);
     setSheetOpen(true);
   }
 
+  const visibleSections =
+    activeSection === "All" ? (SECTIONS as readonly string[]) : [activeSection];
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card sticky top-0 z-20 shadow-sm">
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* ── Top navigation bar ───────────────────────────── */}
+      <header className="sticky top-0 z-20 border-b border-border bg-card shadow-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center gap-4">
+          <div className="flex h-14 items-center gap-4">
+            {/* Brand */}
             <div className="flex items-center gap-2.5 shrink-0">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-stone-800">
+              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-stone-800">
                 <TreePine className="h-4 w-4 text-stone-100" />
               </div>
               <div>
-                <h1 className="text-sm font-semibold text-foreground leading-none">
+                <p className="text-sm font-semibold text-foreground leading-none">
                   Serenity Grove
-                </h1>
-                <p className="text-[11px] text-muted-foreground leading-none mt-0.5">
+                </p>
+                <p className="text-[10px] text-muted-foreground leading-none mt-0.5">
                   Memorial Gardens
                 </p>
               </div>
             </div>
 
-            <div className="h-5 w-px bg-border mx-1 hidden sm:block" />
+            <div className="hidden sm:block h-5 w-px bg-border" />
 
             {/* Search */}
-            <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+            <div className="relative flex-1 max-w-xs">
+              <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Search by name or plot ID…"
-                className="pl-9 h-9 text-sm bg-muted/50 border-border focus-visible:ring-ring"
+                placeholder="Search name or plot ID…"
+                className="pl-8 h-8 text-xs bg-muted/40 border-border"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
 
-            <div className="ml-auto hidden sm:flex items-center gap-1.5">
-              <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
-              <span className="text-xs text-muted-foreground">
-                Est. 1892
-              </span>
+            {/* Legend — right side of top bar */}
+            <div className="ml-auto hidden sm:flex items-center gap-4">
+              {[
+                { dot: "bg-stone-300 border-stone-400", label: "Occupied" },
+                { dot: "bg-emerald-200 border-emerald-400", label: "Available" },
+                { dot: "bg-amber-200 border-amber-400", label: "Reserved" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-1.5">
+                  <span
+                    className={cn(
+                      "h-3 w-3 rounded-sm border",
+                      item.dot
+                    )}
+                  />
+                  <span className="text-xs text-muted-foreground">
+                    {item.label}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 space-y-5">
-        {/* Stats bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            {
-              label: "Total Plots",
-              value: stats.total,
-              icon: MapPin,
-              color: "text-stone-600",
-              bg: "bg-stone-50 border-stone-200",
-            },
-            {
-              label: "Occupied",
-              value: stats.occupied,
-              icon: Users,
-              color: "text-stone-600",
-              bg: "bg-stone-50 border-stone-200",
-            },
-            {
-              label: "Available",
-              value: stats.available,
-              icon: TreePine,
-              color: "text-emerald-600",
-              bg: "bg-emerald-50 border-emerald-200",
-            },
-            {
-              label: "Reserved",
-              value: stats.reserved,
-              icon: MapPin,
-              color: "text-amber-600",
-              bg: "bg-amber-50 border-amber-200",
-            },
-          ].map((stat) => (
-            <div
-              key={stat.label}
-              className={cn(
-                "rounded-lg border p-3.5 flex items-center gap-3",
-                stat.bg
-              )}
-            >
-              <stat.icon className={cn("h-4 w-4 shrink-0", stat.color)} />
-              <div>
-                <p className="text-[11px] text-muted-foreground">{stat.label}</p>
-                <p className={cn("text-lg font-semibold leading-none mt-0.5", stat.color)}>
-                  {stat.value}
-                </p>
-              </div>
+      {/* ── Sub-bar: Section filter + stats ─────────────── */}
+      <div className="border-b border-border bg-card/60 backdrop-blur-sm">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-11 items-center justify-between gap-4">
+            {/* Section filter buttons */}
+            <div className="flex items-center gap-1.5">
+              {["All", ...SECTIONS].map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setActiveSection(s)}
+                  className={cn(
+                    "rounded px-3 py-1 text-xs font-medium transition-all duration-100",
+                    activeSection === s
+                      ? "bg-stone-800 text-white shadow-sm"
+                      : "text-muted-foreground hover:bg-stone-100 hover:text-stone-800"
+                  )}
+                >
+                  {s === "All" ? "All Sections" : `Section ${s}`}
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {/* Controls row */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          {/* Section filter */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs text-muted-foreground font-medium">Section:</span>
-            {sections.map((s) => (
-              <button
-                key={s}
-                onClick={() => setActiveSection(s)}
-                className={cn(
-                  "rounded-md px-3 py-1 text-xs font-medium transition-all",
-                  activeSection === s
-                    ? "bg-stone-800 text-white shadow-sm"
-                    : "bg-muted text-muted-foreground hover:bg-stone-200 hover:text-stone-800"
-                )}
-              >
-                {s === "All" ? "All Sections" : `Section ${s}`}
-              </button>
-            ))}
-          </div>
-
-          {/* Legend */}
-          <div className="flex items-center gap-3">
-            {[
-              { color: "bg-stone-300", label: "Occupied" },
-              { color: "bg-emerald-200", label: "Available" },
-              { color: "bg-amber-200", label: "Reserved" },
-            ].map((item) => (
-              <div key={item.label} className="flex items-center gap-1.5">
-                <span className={cn("h-3 w-3 rounded-sm border", item.color)} />
-                <span className="text-xs text-muted-foreground">{item.label}</span>
-              </div>
-            ))}
+            {/* Compact stats */}
+            <div className="hidden sm:flex items-center gap-4 text-xs text-muted-foreground">
+              <span>
+                <span className="font-semibold text-stone-700">{totalStats.occupied}</span> occupied
+              </span>
+              <span>
+                <span className="font-semibold text-emerald-600">{totalStats.available}</span> available
+              </span>
+              <span>
+                <span className="font-semibold text-amber-600">{totalStats.reserved}</span> reserved
+              </span>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Results count */}
+      {/* ── Main map area ────────────────────────────────── */}
+      <main className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+        {/* Search result badge */}
         {searchQuery && (
           <div className="flex items-center gap-2">
             <Badge variant="secondary" className="text-xs font-normal">
-              {filtered.length} result{filtered.length !== 1 ? "s" : ""} for &ldquo;{searchQuery}&rdquo;
+              {filtered.length} result{filtered.length !== 1 ? "s" : ""} for &ldquo;
+              {searchQuery}&rdquo;
             </Badge>
             <button
               onClick={() => setSearchQuery("")}
@@ -191,68 +167,81 @@ export function CemeteryMap() {
           </div>
         )}
 
-        {/* Section dividers + Grid */}
+        {/* Empty state */}
         {filtered.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 text-center">
-            <TreePine className="h-10 w-10 text-stone-300 mb-4" />
-            <p className="text-stone-600 font-medium">No records found</p>
-            <p className="text-sm text-stone-400 mt-1">
+          <div className="flex flex-col items-center justify-center py-24 text-center">
+            <TreePine className="h-12 w-12 text-stone-200 mb-4" />
+            <p className="text-stone-500 font-medium">No records found</p>
+            <p className="text-sm text-stone-400 mt-1.5">
               Try searching by a different name or plot ID.
             </p>
           </div>
         ) : (
-          <div className="space-y-6">
-            {(activeSection === "All" ? ["A", "B", "C", "D"] : [activeSection]).map(
-              (section) => {
-                const sectionGraves = filtered.filter(
-                  (g) => g.section === section
-                );
-                if (sectionGraves.length === 0) return null;
-                return (
-                  <div key={section}>
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 rounded bg-stone-800 flex items-center justify-center">
-                          <span className="text-[11px] font-bold text-white">
-                            {section}
-                          </span>
-                        </div>
-                        <span className="text-sm font-semibold text-stone-700">
-                          Section {section}
+          <div className="space-y-10">
+            {visibleSections.map((section) => {
+              const sectionGraves = filtered.filter(
+                (g) => g.section === section
+              );
+              if (sectionGraves.length === 0) return null;
+
+              const occupiedCount = sectionGraves.filter(
+                (g) => g.status === "occupied"
+              ).length;
+
+              return (
+                <section key={section} aria-label={`Section ${section}`}>
+                  {/* Section heading */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex items-center gap-2.5 shrink-0">
+                      <div className="h-7 w-7 rounded bg-stone-800 flex items-center justify-center">
+                        <span className="text-[11px] font-bold text-white tracking-wide">
+                          {section}
                         </span>
                       </div>
-                      <div className="flex-1 h-px bg-border" />
-                      <span className="text-xs text-muted-foreground">
-                        {sectionGraves.filter((g) => g.status === "occupied").length} occupied
-                      </span>
+                      <div>
+                        <h2 className="text-sm font-semibold text-stone-800 leading-none">
+                          {SECTION_LABELS[section]}
+                        </h2>
+                        <p className="text-[10px] text-stone-400 mt-0.5">
+                          {occupiedCount} occupied &middot; {sectionGraves.length} total plots shown
+                        </p>
+                      </div>
                     </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5">
-                      {sectionGraves.map((grave) => (
+                    <div className="flex-1 h-px bg-border" />
+                  </div>
+
+                  {/* Organic flexbox grid — wrapping rows */}
+                  <div className="flex flex-wrap gap-2.5">
+                    {sectionGraves.map((grave) => (
+                      <div
+                        key={grave.id}
+                        className="w-[calc(50%-5px)] sm:w-[calc(33.333%-7px)] md:w-[calc(25%-8px)] lg:w-[calc(16.666%-9px)]"
+                      >
                         <GraveCard
-                          key={grave.id}
                           grave={grave}
+                          isHighlighted={selectedGrave?.id === grave.id}
                           onClick={handleGraveClick}
                         />
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
-                );
-              }
-            )}
+                </section>
+              );
+            })}
           </div>
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border mt-12 py-6">
+      {/* ── Footer ───────────────────────────────────────── */}
+      <footer className="border-t border-border py-5 mt-4">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <p className="text-center text-xs text-muted-foreground">
-            Serenity Grove Memorial Gardens &mdash; Cemetery Management System &mdash; Records maintained with respect and care.
+            Serenity Grove Memorial Gardens &mdash; Cemetery Management System &mdash; Est. 1892
           </p>
         </div>
       </footer>
 
-      {/* Detail Sheet */}
+      {/* ── Detail Sheet ─────────────────────────────────── */}
       <GraveDetailSheet
         grave={selectedGrave}
         open={sheetOpen}
