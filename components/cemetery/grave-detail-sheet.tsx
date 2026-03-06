@@ -6,36 +6,33 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import type { GraveRecord } from "@/lib/cemetery-data";
+import type { Grave } from "@/lib/cemetery-data";
+import { X } from "lucide-react";
 
 interface GraveDetailSheetProps {
-  grave: GraveRecord | null;
+  grave: Grave | null;
+  sectionName?: string;
   open: boolean;
   onClose: () => void;
 }
 
-// Vietnam national emblem as an inline SVG-free image — use the public domain emblem URL
+// Vietnam national emblem
 const EMBLEM_SRC =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Coat_of_arms_of_Vietnam.svg/200px-Coat_of_arms_of_Vietnam.svg.png";
 
-interface RowProps {
+interface InfoRowProps {
   label: string;
   value: string;
-  valueBold?: boolean;
 }
 
-function InfoRow({ label, value, valueBold = true }: RowProps) {
+function InfoRow({ label, value }: InfoRowProps) {
   return (
     <tr>
-      <td className="py-1 pr-6 text-sm text-gray-700 whitespace-nowrap align-top w-1/2">
+      <td className="py-2 pr-6 text-sm text-gray-700 whitespace-nowrap align-top">
         {label}:
       </td>
-      <td
-        className={`py-1 text-sm text-right align-top ${
-          valueBold ? "font-bold text-gray-900" : "text-gray-700"
-        }`}
-      >
-        {value || "Chưa rõ"}
+      <td className="py-2 text-sm font-bold text-gray-900 text-right">
+        {value || "Không rõ"}
       </td>
     </tr>
   );
@@ -43,13 +40,13 @@ function InfoRow({ label, value, valueBold = true }: RowProps) {
 
 export function GraveDetailSheet({
   grave,
+  sectionName,
   open,
   onClose,
 }: GraveDetailSheetProps) {
   if (!grave) return null;
 
-  const d = grave.deceased;
-  const isUnknown = grave.status === "unknown";
+  const isUnknown = grave.name.includes("Vô Danh") || grave.name.includes("Không tên");
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
@@ -57,63 +54,63 @@ export function GraveDetailSheet({
         className="max-w-sm w-full p-0 overflow-hidden rounded-lg border border-gray-200 shadow-xl"
         style={{ background: "#fff" }}
       >
-        {/* Accessible title/description for screen readers */}
-        <DialogTitle className="sr-only">
-          {d ? d.fullName : `Mộ số ${grave.plotNumber}`}
-        </DialogTitle>
+        <DialogTitle className="sr-only">Chi tiết liệt sĩ</DialogTitle>
         <DialogDescription className="sr-only">
-          Chi tiết thông tin liệt sĩ mộ số {grave.plotNumber}, khu{" "}
-          {grave.block === "left" ? "A" : "B"}, hàng {grave.row}, mộ{" "}
-          {grave.col}.
+          Thông tin chi tiết của {grave.name}
         </DialogDescription>
 
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-1 text-gray-400 hover:text-gray-600 z-10"
+          aria-label="Đóng"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
         {/* Emblem */}
-        <div className="flex justify-center pt-6 pb-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={EMBLEM_SRC}
-            alt="Quốc huy Việt Nam"
-            width={80}
-            height={80}
-            className="h-20 w-20 object-contain"
-            crossOrigin="anonymous"
-          />
+        <div className="flex justify-center pt-6 pb-4">
+          <img src={EMBLEM_SRC} alt="Quốc huy Việt Nam" className="w-16 h-16" />
         </div>
 
-        {/* Info table */}
-        <div className="px-8 pb-4">
-          <table className="w-full border-collapse">
-            <tbody>
-              <InfoRow
-                label="Liệt sĩ"
-                value={
-                  isUnknown
-                    ? "Chưa rõ thông tin"
-                    : d?.fullName ?? "Chưa rõ thông tin"
-                }
-              />
-              <InfoRow label="Ngày sinh" value={d?.dateOfBirth ?? ""} />
-              <InfoRow label="Quê quán" value={d?.hometown ?? ""} />
-              <InfoRow label="Ngày nhập ngũ" value={d?.enlistmentDate ?? ""} />
-              <InfoRow label="Chức vụ" value={d?.rank ?? ""} />
-              <InfoRow label="Ngày hy sinh" value={d?.dateOfDeath ?? ""} />
-              <InfoRow label="Nơi hy sinh" value={d?.deathPlace ?? ""} />
-            </tbody>
-          </table>
-        </div>
+        {/* Content */}
+        <div className="px-6 pb-6">
+          {isUnknown ? (
+            <div className="text-center py-4">
+              <p className="text-sm text-gray-600 mb-2">Liệt sĩ chưa rõ thông tin</p>
+              <p className="text-lg font-bold text-gray-800">{grave.name}</p>
+              {sectionName && (
+                <p className="text-xs text-gray-500 mt-2">Khu: {sectionName}</p>
+              )}
+            </div>
+          ) : (
+            <>
+              {/* Name as heading */}
+              <h2 className="text-center text-lg font-bold text-gray-900 mb-4">
+                {grave.name}
+              </h2>
 
-        {/* Footer: plot coordinates */}
-        <div className="border-t border-gray-200 px-8 py-3 bg-gray-50">
-          <p className="text-sm text-center text-gray-700">
-            Khu:{" "}
-            <span className="font-bold">
-              {grave.block === "left" ? "A" : "B"}
-            </span>
-            {"  "}Hàng số:{" "}
-            <span className="font-bold">{grave.row}</span>
-            {"  "}Mộ số:{" "}
-            <span className="font-bold">{grave.col}</span>
-          </p>
+              {/* Info table */}
+              <table className="w-full">
+                <tbody>
+                  <InfoRow
+                    label="Sinh"
+                    value={grave.birthDate}
+                  />
+                  <InfoRow
+                    label="Mất"
+                    value={grave.deathDate}
+                  />
+                  {sectionName && (
+                    <InfoRow
+                      label="Khu"
+                      value={sectionName}
+                    />
+                  )}
+                </tbody>
+              </table>
+            </>
+          )}
         </div>
       </DialogContent>
     </Dialog>
