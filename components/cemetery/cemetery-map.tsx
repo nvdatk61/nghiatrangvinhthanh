@@ -1,97 +1,115 @@
-"use client";
+'use client';
 
-import { useState, useMemo } from "react";
-import { CEMETERY_DATA, type Grave } from "@/lib/cemetery-data";
-import { GraveCard } from "./grave-card";
-import { GraveDetailSheet } from "./grave-detail-sheet";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { useState, useMemo } from 'react';
+import { Search } from 'lucide-react';
+import { CEMETERY_DATA } from '@/lib/cemetery-data';
+import { GraveCard } from './grave-card';
+import { GraveDetailModal } from './grave-detail-modal';
+import type { Grave } from '@/lib/cemetery-data';
 
 export function CemeteryMap() {
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedGrave, setSelectedGrave] = useState<Grave | null>(null);
-  const [sheetOpen, setSheetOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
 
-  // Find all graves matching the search query
-  const matchingIds = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    if (!q) return null;
+  // Filter graves based on search query
+  const filteredGraves = useMemo(() => {
+    if (!searchQuery.trim()) return CEMETERY_DATA;
     
-    const matched = new Set<string>();
-    CEMETERY_DATA.forEach((grave) => {
-      if (
-        grave.name.toLowerCase().includes(q) ||
-        grave.id.toLowerCase().includes(q)
-      ) {
-        matched.add(grave.id);
-      }
-    });
-    return matched.size > 0 ? matched : null;
+    const query = searchQuery.toLowerCase();
+    return CEMETERY_DATA.filter(grave => 
+      grave.name.toLowerCase().includes(query) ||
+      grave.hometown.toLowerCase().includes(query) ||
+      grave.birthYear.toLowerCase().includes(query) ||
+      grave.deathYear.toLowerCase().includes(query) ||
+      grave.id.toLowerCase().includes(query)
+    );
   }, [searchQuery]);
 
-  function handleClick(grave: Grave) {
-    setSelectedGrave(grave);
-    setSheetOpen(true);
-  }
+  // Calculate max row for dynamic grid height
+  const maxRow = Math.max(...CEMETERY_DATA.map(g => g.row));
 
-  // Calculate the grid's row and column span based on data
-  const maxRow = Math.max(...CEMETERY_DATA.map((g) => g.row));
-  const maxCol = 23; // Fixed at 23 columns (A-W, with center aisle at cols 13-15)
+  const handleGraveClick = (grave: Grave) => {
+    setSelectedGrave(grave);
+    setModalOpen(true);
+  };
 
   return (
-    <div className="min-h-screen font-sans" style={{ background: "#f5f0e8" }}>
-      {/* ── Title & Search ────────────────────────────────── */}
-      <div className="px-4 pt-6 pb-4">
-        <h1
-          className="text-center text-3xl font-bold mb-4"
-          style={{ color: "#dc2626" }}
-        >
-          NGHĨA TRANG LIỆT SĨ
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-6">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-slate-900 mb-2">
+          Nghĩa Trang Liệt Sĩ Xã Song Mai
         </h1>
+        <p className="text-slate-600">Lưu giữ ký ức các anh hùng liệt sĩ</p>
+      </div>
 
-        {/* Search Bar */}
-        <div className="flex justify-center mb-6">
-          <div className="relative w-full max-w-md">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
-            <Input
-              type="text"
-              placeholder="Tìm kiếm theo tên hoặc mã..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 border-slate-300"
-            />
-          </div>
+      {/* Search Bar */}
+      <div className="mb-8 max-w-md">
+        <div className="relative">
+          <Search className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
+          <input
+            type="text"
+            placeholder="Tìm kiếm theo tên, quê quán, năm..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent bg-white shadow-sm"
+          />
+        </div>
+        <p className="text-xs text-slate-500 mt-2">
+          Hiển thị {filteredGraves.length} / {CEMETERY_DATA.length} mộ
+        </p>
+      </div>
+
+      {/* Color Legend */}
+      <div className="mb-8 flex gap-6 text-sm">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 bg-gradient-to-br from-slate-700 to-slate-800 rounded border border-slate-600"></div>
+          <span className="text-slate-700">Mộ liệt sĩ</span>
         </div>
       </div>
 
-      {/* ── Grand CSS Grid Layout ────────────────────────────────── */}
-      <div className="px-4 pb-8">
+      {/* Map Container with scroll */}
+      <div className="overflow-auto bg-white rounded-lg shadow-lg p-6 border border-slate-200">
+        {/* Cemetery Grid */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(23, minmax(0, 1fr))`,
-            gap: "0px",
-            padding: "0px",
+            display: 'grid',
+            gridTemplateColumns: 'repeat(23, minmax(75px, 90px))',
+            gridAutoRows: 'minmax(52px, auto)',
+            gap: '4px',
+            minWidth: 'max-content',
           }}
         >
-          {CEMETERY_DATA.map((grave) => {
-            const isMatching = !matchingIds || matchingIds.has(grave.id);
-            const dimmed = matchingIds && !isMatching;
+          {/* Center aisle visual element */}
+          <div
+            style={{
+              gridColumn: '13 / 16',
+              gridRow: `1 / ${maxRow + 1}`,
+              borderLeft: '2px dashed rgba(148, 163, 184, 0.5)',
+              borderRight: '2px dashed rgba(148, 163, 184, 0.5)',
+              opacity: 0.5,
+              pointerEvents: 'none',
+            }}
+          ></div>
 
+          {/* Grave cards */}
+          {CEMETERY_DATA.map((grave) => {
+            const isFiltered = !filteredGraves.includes(grave);
             return (
               <div
                 key={grave.id}
                 style={{
                   gridColumn: grave.col,
                   gridRow: grave.row,
-                  opacity: dimmed ? 0.25 : 1,
-                  transition: "opacity 200ms ease-in-out",
+                  opacity: isFiltered ? 0.25 : 1,
+                  transition: 'opacity 0.2s ease-in-out',
                 }}
               >
                 <GraveCard
                   grave={grave}
                   isSelected={selectedGrave?.id === grave.id}
-                  onClick={handleClick}
+                  onClick={() => handleGraveClick(grave)}
                 />
               </div>
             );
@@ -99,14 +117,17 @@ export function CemeteryMap() {
         </div>
       </div>
 
-      {/* ── Detail Sheet ────────────────────────────────── */}
-      {selectedGrave && (
-        <GraveDetailSheet
-          grave={selectedGrave}
-          open={sheetOpen}
-          onOpenChange={setSheetOpen}
-        />
-      )}
+      {/* Detail Modal */}
+      <GraveDetailModal
+        grave={selectedGrave}
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+      />
+
+      {/* Footer */}
+      <div className="mt-8 text-center text-sm text-slate-500">
+        <p>Tôn vinh những người đã ngã xuống vì nước nhân dân</p>
+      </div>
     </div>
   );
 }
