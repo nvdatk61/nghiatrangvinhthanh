@@ -15,7 +15,7 @@ export const CEMETERY_DATA: Grave[] = [
   { "id": "3-4", "name": "Lê Văn Hiến", "birthYear": "1949", "deathYear": "1970", "row": 3, "col": 4 },
   { "id": "3-5", "name": "Đình Văn Ngọ", "birthYear": "1925", "deathYear": "1949", "row": 3, "col": 5 },
   { "id": "3-6", "name": "Nguyễn Quốc Vạn", "birthYear": "1920", "deathYear": "1952", "row": 3, "col": 6 },
-  { "id": "4-7", "name": "Nguyễn Duy Ngoạn", "birthYear": "1945", "deathYear": "1968", "row": 4, "col": 7 },
+  { "id": "3-7", "name": "Nguyễn Duy Ngoạn", "birthYear": "1945", "deathYear": "1968", "row": 3, "col": 7 },
   { "id": "3-8", "name": "Đình Văn Mão", "birthYear": "không rõ", "deathYear": "1951", "row": 3, "col": 8 },
   { "id": "3-9", "name": "Nguyễn Quốc Hộ", "birthYear": "1917", "deathYear": "1949", "row": 3, "col": 9 },
   { "id": "3-10", "name": "Nguyễn Quốc Thuyết", "birthYear": "1910", "deathYear": "1949", "row": 3, "col": 10 },
