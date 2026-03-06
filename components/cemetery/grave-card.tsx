@@ -14,7 +14,7 @@ export function GraveCard({ grave, isSelected, onClick }: GraveCardProps) {
   return (
     <button
       onClick={onClick}
-      className={`bg-gradient-to-br from-slate-700 to-slate-800 text-white rounded-md p-2 hover:scale-[1.1] hover:z-10 transition-all cursor-pointer border-2 ${
+      className={`w-full h-full bg-gradient-to-br from-slate-700 to-slate-800 text-white rounded-sm flex flex-col items-center justify-between p-1 hover:from-slate-600 hover:to-slate-700 transition-all cursor-pointer border-2 overflow-hidden ${
         isSelected ? 'border-amber-300 ring-2 ring-amber-300' : 'border-slate-600'
       }`}
       style={{
@@ -23,16 +23,16 @@ export function GraveCard({ grave, isSelected, onClick }: GraveCardProps) {
       }}
       aria-label={`${grave.name}, ${grave.birthYear} - ${grave.deathYear}`}
     >
-      <div className="text-[11px] font-semibold text-amber-50 leading-tight">
+      <div className="text-[10px] font-semibold text-amber-50 leading-tight w-full truncate px-0.5">
         {grave.name}
       </div>
       {!isUnknown && (
-        <div className="text-[9px] text-amber-100/70 leading-tight">
+        <div className="text-[8px] text-amber-100/70 leading-tight w-full truncate px-0.5">
           {grave.birthYear} - {grave.deathYear}
         </div>
       )}
       {isUnknown && (
-        <div className="text-[9px] text-amber-100/70 leading-tight italic">
+        <div className="text-[8px] text-amber-100/70 leading-tight w-full truncate px-0.5 italic">
           {grave.birthYear} - {grave.deathYear}
         </div>
       )}

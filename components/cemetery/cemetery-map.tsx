@@ -39,7 +39,7 @@ export function CemeteryMap() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-slate-900 mb-2">
-          Nghĩa Trang Liệt Sĩ Xã Song Mai
+          Nghĩa Trang Liệt Sĩ Xã Vĩnh Thanh
         </h1>
         <p className="text-slate-600">Lưu giữ ký ức các anh hùng liệt sĩ</p>
       </div>
@@ -75,8 +75,8 @@ export function CemeteryMap() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(23, minmax(75px, 90px))',
-            gridAutoRows: 'minmax(52px, auto)',
+            gridTemplateColumns: 'repeat(23, 80px)',
+            gridAutoRows: '70px',
             gap: '4px',
             minWidth: 'max-content',
           }}
