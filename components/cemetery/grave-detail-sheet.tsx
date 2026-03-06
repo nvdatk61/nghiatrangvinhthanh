@@ -3,114 +3,92 @@
 import {
   Dialog,
   DialogContent,
-  DialogTitle,
-  DialogDescription,
+  DialogClose,
 } from "@/components/ui/dialog";
-import type { Grave } from "@/lib/cemetery-data";
 import { X } from "lucide-react";
+import type { Grave } from "@/lib/cemetery-data";
 
 interface GraveDetailSheetProps {
-  grave: Grave | null;
-  sectionName?: string;
+  grave: Grave;
   open: boolean;
-  onClose: () => void;
-}
-
-// Vietnam national emblem
-const EMBLEM_SRC =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Coat_of_arms_of_Vietnam.svg/200px-Coat_of_arms_of_Vietnam.svg.png";
-
-interface InfoRowProps {
-  label: string;
-  value: string;
-}
-
-function InfoRow({ label, value }: InfoRowProps) {
-  return (
-    <tr>
-      <td className="py-2 pr-6 text-sm text-gray-700 whitespace-nowrap align-top">
-        {label}:
-      </td>
-      <td className="py-2 text-sm font-bold text-gray-900 text-right">
-        {value || "Không rõ"}
-      </td>
-    </tr>
-  );
+  onOpenChange: (open: boolean) => void;
 }
 
 export function GraveDetailSheet({
   grave,
-  sectionName,
   open,
-  onClose,
+  onOpenChange,
 }: GraveDetailSheetProps) {
-  if (!grave) return null;
-
-  const isUnknown = grave.name.includes("Vô Danh") || grave.name.includes("Không tên");
+  // Extract year from dates
+  const birthYear = grave.birthDate === "không rõ" ? "không rõ" : grave.birthDate;
+  const deathYear = grave.deathDate;
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent
-        className="max-w-sm w-full p-0 overflow-hidden rounded-lg border border-gray-200 shadow-xl"
-        style={{ background: "#fff" }}
-      >
-        <DialogTitle className="sr-only">Chi tiết liệt sĩ</DialogTitle>
-        <DialogDescription className="sr-only">
-          Thông tin chi tiết của {grave.name}
-        </DialogDescription>
-
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-1 text-gray-400 hover:text-gray-600 z-10"
-          aria-label="Đóng"
-        >
-          <X className="w-5 h-5" />
-        </button>
-
-        {/* Emblem */}
-        <div className="flex justify-center pt-6 pb-4">
-          <img src={EMBLEM_SRC} alt="Quốc huy Việt Nam" className="w-16 h-16" />
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
+        {/* Vietnam Coat of Arms at top */}
+        <div className="flex justify-center mb-4">
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 100 100"
+            className="text-yellow-500"
+            fill="currentColor"
+          >
+            {/* Simplified Vietnam state emblem outline */}
+            <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2" />
+            <circle cx="50" cy="50" r="35" fill="currentColor" opacity="0.1" />
+            {/* Star */}
+            <polygon
+              points="50,20 58,40 80,40 65,52 72,75 50,62 28,75 35,52 20,40 42,40"
+              fill="currentColor"
+            />
+          </svg>
         </div>
 
-        {/* Content */}
-        <div className="px-6 pb-6">
-          {isUnknown ? (
-            <div className="text-center py-4">
-              <p className="text-sm text-gray-600 mb-2">Liệt sĩ chưa rõ thông tin</p>
-              <p className="text-lg font-bold text-gray-800">{grave.name}</p>
-              {sectionName && (
-                <p className="text-xs text-gray-500 mt-2">Khu: {sectionName}</p>
-              )}
-            </div>
-          ) : (
-            <>
-              {/* Name as heading */}
-              <h2 className="text-center text-lg font-bold text-gray-900 mb-4">
-                {grave.name}
-              </h2>
+        {/* Close button */}
+        <DialogClose asChild>
+          <button
+            className="absolute top-4 right-4 p-1 hover:bg-slate-100 rounded-md transition-colors"
+            aria-label="Đóng"
+          >
+            <X className="h-5 w-5 text-slate-500" />
+          </button>
+        </DialogClose>
 
-              {/* Info table */}
-              <table className="w-full">
-                <tbody>
-                  <InfoRow
-                    label="Sinh"
-                    value={grave.birthDate}
-                  />
-                  <InfoRow
-                    label="Mất"
-                    value={grave.deathDate}
-                  />
-                  {sectionName && (
-                    <InfoRow
-                      label="Khu"
-                      value={sectionName}
-                    />
-                  )}
-                </tbody>
-              </table>
-            </>
-          )}
+        {/* Name heading */}
+        <h2 className="text-center text-lg font-bold text-slate-800 mb-4">
+          {grave.name}
+        </h2>
+
+        {/* Two-column info table */}
+        <div className="space-y-3 text-sm">
+          {/* Liệt sĩ (Name/Title) */}
+          <div className="flex justify-between">
+            <span className="text-slate-600 font-medium">Liệt sĩ:</span>
+            <span className="font-semibold text-slate-800">{grave.name}</span>
+          </div>
+
+          {/* Ngày sinh (Birth Year) */}
+          <div className="flex justify-between">
+            <span className="text-slate-600 font-medium">Ngày sinh:</span>
+            <span className="font-semibold text-slate-800">{birthYear}</span>
+          </div>
+
+          {/* Ngày hy sinh (Death Year) */}
+          <div className="flex justify-between">
+            <span className="text-slate-600 font-medium">Ngày hy sinh:</span>
+            <span className="font-semibold text-slate-800">{deathYear}</span>
+          </div>
+
+          {/* Grid position info */}
+          <div className="border-t border-slate-200 pt-3 mt-3">
+            <div className="flex justify-between text-xs text-slate-600">
+              <span>Khu: {grave.col}</span>
+              <span>Hàng số: {grave.row}</span>
+              <span>Mộ số: {grave.id}</span>
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
