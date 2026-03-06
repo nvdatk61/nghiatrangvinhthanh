@@ -10,15 +10,15 @@ interface GraveCardProps {
 }
 
 export function GraveCard({ grave, isSelected, onClick }: GraveCardProps) {
-  // Extract year from birthDate and deathDate
-  const birthYear = grave.birthDate === "không rõ" ? "?" : grave.birthDate.substring(0, 4);
-  const deathYear = grave.deathDate.substring(0, 4);
+  // Format year range from birthYear and deathYear
+  const birthYear = grave.birthYear === "không rõ" ? "?" : grave.birthYear;
+  const deathYear = grave.deathYear === "không rõ" ? "?" : grave.deathYear;
   const yearRange = `${birthYear} - ${deathYear}`;
 
   return (
     <button
       onClick={() => onClick(grave)}
-      aria-label={`${grave.name}, ${grave.birthDate} - ${grave.deathDate}`}
+      aria-label={`${grave.name}, ${grave.birthYear} - ${grave.deathYear}`}
       className={cn(
         // Base tile — fixed size, muted blue matching memorial wall aesthetic
         "w-full h-[52px] text-center px-1 py-0.5 rounded-sm border transition-all duration-100 overflow-hidden flex flex-col items-center justify-center",

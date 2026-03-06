@@ -19,9 +19,9 @@ export function GraveDetailSheet({
   open,
   onOpenChange,
 }: GraveDetailSheetProps) {
-  // Extract year from dates
-  const birthYear = grave.birthDate === "không rõ" ? "không rõ" : grave.birthDate;
-  const deathYear = grave.deathDate;
+  // Birth and death years are already in the right format
+  const birthYear = grave.birthYear;
+  const deathYear = grave.deathYear;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
