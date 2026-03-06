@@ -75,8 +75,8 @@ export function CemeteryMap() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(23, 80px)',
-            gridAutoRows: '70px',
+            gridTemplateColumns: 'repeat(23, minmax(80px, 80px))',
+            gridAutoRows: '90px',
             gap: '4px',
             minWidth: 'max-content',
           }}
