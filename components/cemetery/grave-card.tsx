@@ -15,10 +15,6 @@ export function GraveCard({ grave, isSelected, onClick }: GraveCardProps) {
     <button
       onClick={onClick}
       className={`relative w-full h-full flex flex-col items-center justify-center p-2 cursor-pointer transition-all duration-200 group`}
-      style={{
-        gridColumn: grave.col,
-        gridRow: grave.row,
-      }}
       aria-label={`${grave.name}, ${grave.birthYear} - ${grave.deathYear}`}
     >
       {/* Tombstone shape */}
