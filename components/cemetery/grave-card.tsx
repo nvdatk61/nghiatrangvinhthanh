@@ -14,28 +14,43 @@ export function GraveCard({ grave, isSelected, onClick }: GraveCardProps) {
   return (
     <button
       onClick={onClick}
-      className={`w-full h-full bg-gradient-to-br from-slate-700 to-slate-800 text-white rounded-sm flex flex-col items-center justify-between p-1.5 hover:from-slate-600 hover:to-slate-700 transition-all cursor-pointer border-2 ${
-        isSelected ? 'border-amber-300 ring-2 ring-amber-300' : 'border-slate-600'
-      }`}
+      className={`relative w-full h-full flex flex-col items-center justify-center p-2 cursor-pointer transition-all duration-200 group`}
       style={{
         gridColumn: grave.col,
         gridRow: grave.row,
       }}
       aria-label={`${grave.name}, ${grave.birthYear} - ${grave.deathYear}`}
     >
-      <p className="text-[10px] font-semibold text-amber-50 leading-tight w-full text-center break-words whitespace-normal px-0.5">
-        {grave.name}
-      </p>
-      {!isUnknown && (
-        <div className="text-[8px] text-amber-100/70 leading-tight w-full text-center whitespace-normal px-0.5">
-          {grave.birthYear} - {grave.deathYear}
+      {/* Tombstone shape */}
+      <div
+        className={`w-full h-full rounded-t-lg flex flex-col items-center justify-center relative shadow-lg transition-all duration-200 ${
+          isSelected 
+            ? 'bg-gradient-to-b from-stone-400 to-stone-500 shadow-2xl ring-2 ring-amber-400' 
+            : 'bg-gradient-to-b from-stone-300 to-stone-400 hover:from-stone-350 hover:to-stone-450 group-hover:shadow-xl'
+        }`}
+        style={{
+          clipPath: 'polygon(0 20%, 0 100%, 100% 100%, 100% 20%, 50% 0%)',
+        }}
+      >
+        {/* Tombstone border overlay */}
+        <div
+          className="absolute inset-0 opacity-30"
+          style={{
+            clipPath: 'polygon(0 20%, 0 100%, 100% 100%, 100% 20%, 50% 0%)',
+            backgroundImage: 'linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%, rgba(0,0,0,0.2) 100%)',
+          }}
+        />
+
+        {/* Text content */}
+        <div className="relative z-10 flex flex-col items-center justify-center w-full h-full px-1">
+          <p className="text-[9px] font-bold text-slate-900 leading-tight text-center break-words whitespace-normal">
+            {grave.name}
+          </p>
+          <div className="text-[7px] text-slate-700 leading-tight text-center mt-0.5">
+            {grave.birthYear === 'Không rõ' ? '?' : grave.birthYear} - {grave.deathYear === 'Không rõ' ? '?' : grave.deathYear}
+          </div>
         </div>
-      )}
-      {isUnknown && (
-        <div className="text-[8px] text-amber-100/70 leading-tight w-full text-center whitespace-normal px-0.5 italic">
-          {grave.birthYear} - {grave.deathYear}
-        </div>
-      )}
+      </div>
     </button>
   );
 }
