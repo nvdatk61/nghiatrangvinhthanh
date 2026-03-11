@@ -29,8 +29,8 @@ export default function Page() {
           <p className="text-center text-sm font-semibold uppercase tracking-[0.24em] text-cyan-100">
             CTPV THANH NIÊN XÃ VĨNH THANH
           </p>
-          <p className="mt-2 text-center text-lg font-bold uppercase text-amber-200 sm:text-2xl">
-            CHÀO MỪNG chào mừng bầu cử Đại biểu Quốc hội khóa XVI và Đại biểu HĐND các cấp nhiệm kỳ 2026 – 2031; chào mừng kỷ niệm 95 năm Ngày thành lập Đoàn TNCS Hồ Chí Minh (26/3/1931 – 26/3/2026)
+          <p className="mt-3 text-center text-base font-semibold leading-relaxed text-amber-100 sm:text-lg">
+            Chào mừng bầu cử Đại biểu Quốc hội khóa XVI và Đại biểu HĐND các cấp nhiệm kỳ 2026 - 2031; chào mừng kỷ niệm 95 năm Ngày thành lập Đoàn TNCS Hồ Chí Minh (26/3/1931 - 26/3/2026).
           </p>
 
           <div className="mt-8 rounded-2xl border border-white/40 bg-white/10 p-4 text-center sm:p-5">
