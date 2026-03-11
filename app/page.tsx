@@ -1,5 +1,5 @@
-import { CemeteryMap } from "@/components/cemetery/cemetery-map";
+import CemeteryApp from "@/components/cemetery/cemetery-app";
 
 export default function Page() {
-  return <CemeteryMap />;
+  return <CemeteryApp />;
 }

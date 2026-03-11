@@ -1,151 +1,146 @@
-"use client";
+'use client';
 
-import { useState, useMemo } from "react";
-import {
-  CEMETERY_DATA,
-  LEFT_BLOCK_ROWS,
-  RIGHT_BLOCK_ROWS,
-  type GraveRecord,
-} from "@/lib/cemetery-data";
-import { GraveCard } from "./grave-card";
-import { GraveDetailSheet } from "./grave-detail-sheet";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { useState, useMemo } from 'react';
+import { Search } from 'lucide-react';
+import { CEMETERY_DATA } from '@/lib/cemetery-data';
+import { GraveCard } from './grave-card';
+import { GraveDetailModal } from './grave-detail-modal';
+import type { Grave } from '@/lib/cemetery-data';
 
 export function CemeteryMap() {
-  const [selectedGrave, setSelectedGrave] = useState<GraveRecord | null>(null);
-  const [sheetOpen, setSheetOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedGrave, setSelectedGrave] = useState<Grave | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  // IDs of graves matching the search
-  const matchingIds = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    if (!q) return null;
-    const matched = new Set(
-      CEMETERY_DATA.filter(
-        (g) =>
-          g.deceased?.fullName.toLowerCase().includes(q) ||
-          g.plotNumber.toLowerCase().includes(q)
-      ).map((g) => g.id)
+  // Filter graves based on search query
+  const filteredGraves = useMemo(() => {
+    if (!searchQuery.trim()) return CEMETERY_DATA;
+    
+    const query = searchQuery.toLowerCase();
+    return CEMETERY_DATA.filter(grave => 
+      grave.name.toLowerCase().includes(query) ||
+      grave.hometown.toLowerCase().includes(query) ||
+      grave.birthYear.toLowerCase().includes(query) ||
+      grave.deathYear.toLowerCase().includes(query) ||
+      grave.id.toLowerCase().includes(query)
     );
-    return matched;
   }, [searchQuery]);
 
-  function handleClick(grave: GraveRecord) {
+  // Calculate max row for dynamic grid height
+  const maxRow = Math.max(...CEMETERY_DATA.map(g => g.row));
+
+  const handleGraveClick = (grave: Grave) => {
     setSelectedGrave(grave);
-    setSheetOpen(true);
-  }
+    setModalOpen(true);
+  };
 
   return (
-    <div
-      className="min-h-screen font-sans"
-      style={{ background: "#f5f0e8" }}
-    >
-      {/* ── Search bar ────────────────────────────────────── */}
-      <div className="flex justify-end px-4 pt-3 pb-1">
-        <div className="relative w-64">
-          <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
-          <Input
-            placeholder="Tìm kiếm tên hoặc số mộ..."
-            className="pl-8 h-8 text-xs bg-white border-slate-300 shadow-sm"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 via-blue-50 to-blue-100 p-6">
+      {/* Solemn header */}
+      <div className="mb-12 text-center">
+        <h1 className="text-5xl font-bold text-slate-800 mb-3 font-serif">
+          Nghĩa Trang Liệt Sĩ Xã Vĩnh Thanh
+        </h1>
+        <div className="w-20 h-1 bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto mb-4"></div>
+        <p className="text-slate-600 italic text-lg">Lưu giữ ký ức các anh hùng liệt sĩ</p>
+      </div>
+
+      {/* Search Bar */}
+      <div className="mb-8 flex justify-center">
+        <div className="w-full max-w-md">
+          <div className="relative">
+            <Search className="absolute left-3 top-3 w-5 h-5 text-slate-500" />
+            <input
+              type="text"
+              placeholder="Tìm kiếm theo tên, quê quán, năm..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-600 focus:border-transparent bg-white shadow-md"
+            />
+          </div>
+          <p className="text-xs text-slate-500 mt-2 text-center">
+            Hiển thị {filteredGraves.length} / {CEMETERY_DATA.length} mộ
+          </p>
         </div>
       </div>
 
-      {/* ── Cemetery Title ────────────────────────────────── */}
-      <h1
-        className="text-center font-bold tracking-wide pt-2 pb-5"
-        style={{
-          fontSize: "clamp(14px, 2.5vw, 22px)",
-          color: "#cc0000",
-          fontFamily: "serif",
-          letterSpacing: "0.04em",
-        }}
-      >
-        NGHĨA TRANG LIỆT SĨ XÃ SONG MAI
-      </h1>
-
-      {/* ── Two-block map ─────────────────────────────────── */}
-      <div className="px-4 pb-8 overflow-x-auto">
-        <div className="flex gap-8 min-w-max mx-auto w-fit">
-          {/* Left block */}
-          <GraveBlock
-            rows={LEFT_BLOCK_ROWS}
-            matchingIds={matchingIds}
-            selectedId={selectedGrave?.id ?? null}
-            onClickGrave={handleClick}
-          />
-
-          {/* Right block */}
-          <GraveBlock
-            rows={RIGHT_BLOCK_ROWS}
-            matchingIds={matchingIds}
-            selectedId={selectedGrave?.id ?? null}
-            onClickGrave={handleClick}
-          />
+      {/* Map Container */}
+      <div className="max-w-7xl mx-auto">
+        {/* Central Monument Section */}
+        <div className="flex justify-center mb-12">
+          <div className="w-32 h-40 rounded-t-3xl bg-gradient-to-b from-amber-600 to-amber-800 shadow-2xl flex flex-col items-center justify-center relative border-4 border-amber-700">
+            {/* Monument cross */}
+            <div className="absolute top-4 text-4xl text-yellow-300">✦</div>
+            <div className="text-center text-white mt-6">
+              <p className="text-sm font-bold">KỶ NIỆM</p>
+              <p className="text-xs mt-1">Các Anh Hùng</p>
+              <p className="text-xs">Liệt Sĩ</p>
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* ── Detail Sheet ──────────────────────────────────── */}
-      <GraveDetailSheet
-        grave={selectedGrave}
-        open={sheetOpen}
-        onClose={() => setSheetOpen(false)}
-      />
-    </div>
-  );
-}
+        {/* Cemetery Grid with light background */}
+        <div className="bg-gradient-to-b from-blue-50 to-blue-100 rounded-2xl shadow-xl p-8 border-4 border-blue-200">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(23, minmax(80px, 80px))',
+              gridAutoRows: '90px',
+              gap: '6px',
+              minWidth: 'max-content',
+            }}
+          >
+            {/* Center aisle visual element */}
+            <div
+              style={{
+                gridColumn: '13 / 16',
+                gridRow: `1 / ${maxRow + 1}`,
+                borderLeft: '3px solid rgba(59, 130, 246, 0.3)',
+                borderRight: '3px solid rgba(59, 130, 246, 0.3)',
+                opacity: 0.6,
+                pointerEvents: 'none',
+              }}
+            ></div>
 
-// ─── GraveBlock: renders one column of rows ──────────────────────────────────
-function GraveBlock({
-  rows,
-  matchingIds,
-  selectedId,
-  onClickGrave,
-}: {
-  rows: GraveRecord[][];
-  matchingIds: Set<string> | null;
-  selectedId: string | null;
-  onClickGrave: (g: GraveRecord) => void;
-}) {
-  return (
-    <div className="flex flex-col gap-1">
-      {rows.map((row, rowIdx) => {
-        // Spacer row (empty array = gap between groups in the image)
-        if (row.length === 0) {
-          return <div key={`gap-${rowIdx}`} className="h-4" />;
-        }
-
-        return (
-          <div key={rowIdx} className="flex gap-1">
-            {row.map((grave) => {
-              const dimmed =
-                matchingIds !== null && !matchingIds.has(grave.id);
+            {/* Grave cards */}
+            {CEMETERY_DATA.map((grave) => {
+              const isFiltered = !filteredGraves.includes(grave);
               return (
                 <div
                   key={grave.id}
-                  className="transition-opacity duration-150"
                   style={{
-                    width: 72,
-                    minWidth: 72,
-                    maxWidth: 72,
-                    height: 52,
-                    opacity: dimmed ? 0.25 : 1,
+                    gridColumn: grave.col,
+                    gridRow: grave.row,
+                    opacity: isFiltered ? 0.2 : 1,
+                    transition: 'opacity 0.2s ease-in-out, filter 0.2s ease-in-out',
+                    filter: isFiltered ? 'grayscale(100%)' : 'grayscale(0%)',
                   }}
                 >
                   <GraveCard
                     grave={grave}
-                    isSelected={selectedId === grave.id}
-                    onClick={onClickGrave}
+                    isSelected={selectedGrave?.id === grave.id}
+                    onClick={() => handleGraveClick(grave)}
                   />
                 </div>
               );
             })}
           </div>
-        );
-      })}
+        </div>
+      </div>
+
+      {/* Detail Modal */}
+      <GraveDetailModal
+        grave={selectedGrave}
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+      />
+
+      {/* Solemn footer */}
+      <div className="mt-12 text-center">
+        <p className="text-slate-700 italic font-serif">
+          "Tôn vinh những người đã ngã xuống vì nước nhân dân"
+        </p>
+      </div>
     </div>
   );
 }
