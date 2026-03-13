@@ -20,7 +20,7 @@ export default function Page() {
               className="h-12 w-12 rounded-full border border-white/40 bg-white/95 object-cover"
             />
             <img
-              src="/Huy_hiệu_Đội_TNTP_Hồ_Chí_Minh.png"
+              src="/huy_hieu_doi_TNTP_HCM.png"
               alt="Logo Đội Thiếu niên Tiền phong"
               className="h-12 w-12 rounded-full border border-white/40 bg-white/95 object-cover"
             />
