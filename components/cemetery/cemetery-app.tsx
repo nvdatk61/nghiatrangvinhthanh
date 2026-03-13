@@ -100,12 +100,13 @@ export default function CemeteryApp() {
                 style={{ gridColumn: '13 / 16', gridRow: '1 / 3' }}
               >
                 <div className="flex flex-col items-center">
-                  <div className="relative flex h-[clamp(72px,12vw,228px)] w-[clamp(40px,6.8vw,130px)] items-center justify-center shadow-2xl">
+                  <div className="relative flex h-[clamp(72px,12vw,228px)] w-[clamp(40px,6.8vw,130px)] items-center justify-center overflow-visible shadow-2xl">
                     <div
-                      className="absolute inset-0 border-2 border-rose-300 bg-gradient-to-b from-rose-400 via-rose-600 to-rose-700"
+                      className="absolute inset-0 border-2 border-rose-200 bg-gradient-to-b from-red-400 via-red-600 to-red-800"
+                      style={{ clipPath: 'polygon(18% 0%, 82% 0%, 100% 100%, 0% 100%)' }}
                     />
                     <div
-                      className="absolute left-[22%] right-[22%] top-[20%] bottom-[8%] border border-yellow-100 bg-gradient-to-b from-slate-700 to-slate-900"
+                      className="absolute left-[30%] right-[30%] top-[20%] bottom-[8%] border border-yellow-100 bg-gradient-to-b from-slate-700 to-slate-900"
                       style={{ clipPath: 'polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)' }}
                     />
 
