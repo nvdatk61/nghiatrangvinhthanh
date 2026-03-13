@@ -102,8 +102,7 @@ export default function CemeteryApp() {
                 <div className="flex flex-col items-center">
                   <div className="relative flex h-[clamp(72px,12vw,228px)] w-[clamp(40px,6.8vw,130px)] items-center justify-center overflow-visible shadow-2xl">
                     <div
-                      className="absolute inset-0 border-2 border-rose-200 bg-gradient-to-b from-red-400 via-red-600 to-red-800"
-                      style={{ clipPath: 'polygon(18% 0%, 82% 0%, 100% 100%, 0% 100%)' }}
+                      className="absolute inset-0 border-2 border-amber-100 bg-gradient-to-b from-amber-300 via-orange-500 to-amber-700"
                     />
                     <div
                       className="absolute left-[30%] right-[30%] top-[20%] bottom-[8%] border border-yellow-100 bg-gradient-to-b from-slate-700 to-slate-900"
