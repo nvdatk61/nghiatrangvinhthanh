@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 350" width="200" height="350">
+  <defs>
+    <!-- Red marble gradient for body -->
+    <linearGradient id="redMarble" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="50%" stop-color="#b91c1c"/>
+      <stop offset="100%" stop-color="#7f1d1d"/>
+    </linearGradient>
+    
+    <!-- Dark plaque gradient -->
+    <linearGradient id="darkPlaque" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#374151"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    
+    <!-- White spire gradient -->
+    <linearGradient id="whiteSpire" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    
+    <!-- Stone base gradient -->
+    <linearGradient id="stoneBase" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#78716c"/>
+      <stop offset="100%" stop-color="#44403c"/>
+    </linearGradient>
+    
+    <!-- Flag red gradient -->
+    <linearGradient id="flagRed" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f87171"/>
+      <stop offset="100%" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Flagpole -->
+  <rect x="98" y="15" width="4" height="65" fill="#475569"/>
+  
+  <!-- Vietnamese Flag -->
+  <g transform="translate(102, 18)">
+    <path d="M0 0 Q25 3, 50 0 Q55 0, 58 2 L58 38 Q40 35, 20 40 Q10 42, 0 40 Z" fill="url(#flagRed)"/>
+    <path d="M22 8 l4 8 9 1.5 -6.5 6 1.5 9 -8 -4 -8 4 1.5 -9 -6.5 -6 9 -1.5 z" fill="#facc15"/>
+  </g>
+  
+  <!-- White triangle spire -->
+  <polygon points="100,55 130,105 70,105" fill="url(#whiteSpire)" stroke="#e2e8f0" stroke-width="1"/>
+  
+  <!-- Red circle with star -->
+  <circle cx="100" cy="122" r="18" fill="#dc2626" stroke="#fca5a5" stroke-width="2"/>
+  <path d="M100 108 l4 8 9 1.5 -6.5 6 1.5 9 -8 -4 -8 4 1.5 -9 -6.5 -6 9 -1.5 z" fill="#facc15"/>
+  
+  <!-- Main red marble body -->
+  <rect x="60" y="105" width="80" height="200" fill="url(#redMarble)" stroke="#fecaca" stroke-width="2"/>
+  
+  <!-- Dark inner plaque (tapered) -->
+  <polygon points="80,140 120,140 125,295 75,295" fill="url(#darkPlaque)" stroke="#fde68a" stroke-width="1"/>
+  
+  <!-- Text on plaque -->
+  <text x="100" y="175" text-anchor="middle" fill="#fde68a" font-size="16" font-weight="bold" font-family="Arial, sans-serif">TỔ</text>
+  <text x="100" y="200" text-anchor="middle" fill="#fde68a" font-size="16" font-weight="bold" font-family="Arial, sans-serif">QUỐC</text>
+  <text x="100" y="225" text-anchor="middle" fill="#fde68a" font-size="16" font-weight="bold" font-family="Arial, sans-serif">GHI</text>
+  <text x="100" y="250" text-anchor="middle" fill="#fde68a" font-size="16" font-weight="bold" font-family="Arial, sans-serif">CÔNG</text>
+  
+  <!-- Base tier 1 -->
+  <rect x="45" y="305" width="110" height="18" fill="url(#stoneBase)"/>
+  
+  <!-- Base tier 2 -->
+  <rect x="35" y="323" width="130" height="25" rx="2" fill="#292524"/>
+</svg>

@@ -96,55 +96,14 @@ export default function CemeteryApp() {
             >
               {/* Giant central monument */}
               <div
-                className="relative z-20 flex flex-col items-center justify-center"
+                className="relative z-20 flex items-center justify-center"
                 style={{ gridColumn: '13 / 16', gridRow: '1 / 3' }}
               >
-                <div className="flex flex-col items-center">
-                  <div className="relative flex h-[clamp(72px,12vw,228px)] w-[clamp(40px,6.8vw,130px)] items-center justify-center overflow-visible shadow-2xl">
-                    <div
-                      className="absolute inset-0 border-2 border-amber-100 bg-gradient-to-b from-amber-300 via-orange-500 to-amber-700"
-                    />
-                    <div
-                      className="absolute left-[30%] right-[30%] top-[20%] bottom-[8%] border border-yellow-100 bg-gradient-to-b from-slate-700 to-slate-900"
-                      style={{ clipPath: 'polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)' }}
-                    />
-
-                    <div className="absolute top-[5%] h-[clamp(10px,1.8vw,28px)] w-[clamp(10px,1.8vw,28px)] rounded-full border border-red-700 bg-gradient-to-b from-red-300 to-red-600">
-                      <svg viewBox="0 0 24 24" className="h-full w-full fill-amber-400 p-[2px]">
-                        <path d="M12 2.5l2.8 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.2 6.3 20.1l1.1-6.4-4.6-4.5 6.4-.9L12 2.5z" />
-                      </svg>
-                    </div>
-
-                    <div className="absolute top-[31%] flex flex-col items-center gap-[clamp(1px,0.2vw,3px)] text-[clamp(5px,0.6vw,11px)] font-extrabold leading-none tracking-[0.02em] text-amber-200">
-                      <span>TỔ</span>
-                      <span>QUỐC</span>
-                      <span>GHI</span>
-                      <span>CÔNG</span>
-                    </div>
-
-                    <div
-                      className="absolute -top-[16%] h-[clamp(12px,2.4vw,44px)] w-[clamp(12px,2.4vw,44px)] border border-slate-300 bg-gradient-to-b from-slate-100 to-slate-300"
-                      style={{ clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)' }}
-                    />
-                    <div className="absolute -top-[32%] h-[clamp(14px,2.5vw,48px)] w-[2px] bg-slate-700" />
-                    <svg
-                      viewBox="0 0 60 40"
-                      className="absolute -top-[36%] left-[54%] h-[clamp(8px,1.9vw,28px)] w-[clamp(14px,2.6vw,38px)]"
-                      aria-hidden="true"
-                    >
-                      <defs>
-                        <linearGradient id="flagRed" x1="0" x2="1">
-                          <stop offset="0" stopColor="#f97373" />
-                          <stop offset="1" stopColor="#dc2626" />
-                        </linearGradient>
-                      </defs>
-                      <path d="M2 2 C20 2, 28 9, 40 5 C46 3, 54 2, 58 4 L58 34 C42 30, 32 38, 18 35 C10 33, 6 33, 2 34 Z" fill="url(#flagRed)" />
-                      <path d="M20 10l2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-2.9-5.7 2.9 1.1-6.4-4.6-4.5 6.4-.9L20 10z" fill="#facc15" />
-                    </svg>
-                  </div>
-                  <div className="h-[clamp(4px,1vw,16px)] w-[clamp(58px,8.5vw,146px)] bg-gradient-to-b from-stone-500 to-stone-700" />
-                  <div className="h-[clamp(6px,1.3vw,22px)] w-[clamp(76px,11vw,198px)] rounded-b-sm bg-gradient-to-b from-stone-700 to-stone-900" />
-                </div>
+                <img
+                  src="/monument.svg"
+                  alt="Đài tưởng niệm - Tổ Quốc Ghi Công"
+                  className="h-[clamp(100px,16vw,280px)] w-auto drop-shadow-xl"
+                />
               </div>
 
               {/* Grave tiles */}
