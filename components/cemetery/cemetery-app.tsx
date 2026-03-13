@@ -100,7 +100,7 @@ export default function CemeteryApp() {
                 style={{ gridColumn: '13 / 16', gridRow: '1 / 3' }}
               >
                 <div className="flex flex-col items-center">
-                  <div className="relative flex h-[clamp(98px,12vw,228px)] w-[clamp(52px,6.8vw,130px)] items-center justify-center shadow-2xl">
+                  <div className="relative flex h-[clamp(72px,12vw,228px)] w-[clamp(40px,6.8vw,130px)] items-center justify-center shadow-2xl">
                     <div
                       className="absolute inset-0 border-2 border-rose-300 bg-gradient-to-b from-rose-400 via-rose-600 to-rose-700"
                     />
@@ -109,7 +109,7 @@ export default function CemeteryApp() {
                       style={{ clipPath: 'polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)' }}
                     />
 
-                    <div className="absolute top-[5%] h-[clamp(14px,1.8vw,28px)] w-[clamp(14px,1.8vw,28px)] rounded-full border border-red-700 bg-gradient-to-b from-red-300 to-red-600">
+                    <div className="absolute top-[5%] h-[clamp(10px,1.8vw,28px)] w-[clamp(10px,1.8vw,28px)] rounded-full border border-red-700 bg-gradient-to-b from-red-300 to-red-600">
                       <svg viewBox="0 0 24 24" className="h-full w-full fill-amber-400 p-[2px]">
                         <path d="M12 2.5l2.8 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.2 6.3 20.1l1.1-6.4-4.6-4.5 6.4-.9L12 2.5z" />
                       </svg>
@@ -123,13 +123,13 @@ export default function CemeteryApp() {
                     </div>
 
                     <div
-                      className="absolute -top-[16%] h-[clamp(18px,2.4vw,44px)] w-[clamp(18px,2.4vw,44px)] border border-slate-300 bg-gradient-to-b from-slate-100 to-slate-300"
+                      className="absolute -top-[16%] h-[clamp(12px,2.4vw,44px)] w-[clamp(12px,2.4vw,44px)] border border-slate-300 bg-gradient-to-b from-slate-100 to-slate-300"
                       style={{ clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)' }}
                     />
-                    <div className="absolute -top-[34%] h-[clamp(20px,2.5vw,48px)] w-[2px] bg-slate-700" />
+                    <div className="absolute -top-[32%] h-[clamp(14px,2.5vw,48px)] w-[2px] bg-slate-700" />
                     <svg
                       viewBox="0 0 60 40"
-                      className="absolute -top-[39%] left-[54%] h-[clamp(12px,1.9vw,28px)] w-[clamp(18px,2.6vw,38px)]"
+                      className="absolute -top-[36%] left-[54%] h-[clamp(8px,1.9vw,28px)] w-[clamp(14px,2.6vw,38px)]"
                       aria-hidden="true"
                     >
                       <defs>
@@ -142,8 +142,8 @@ export default function CemeteryApp() {
                       <path d="M20 10l2.8 5.8 6.4.9-4.6 4.5 1.1 6.4-5.7-2.9-5.7 2.9 1.1-6.4-4.6-4.5 6.4-.9L20 10z" fill="#facc15" />
                     </svg>
                   </div>
-                  <div className="h-[clamp(6px,1vw,16px)] w-[clamp(74px,8.5vw,146px)] bg-gradient-to-b from-stone-500 to-stone-700" />
-                  <div className="h-[clamp(8px,1.3vw,22px)] w-[clamp(96px,11vw,198px)] rounded-b-sm bg-gradient-to-b from-stone-700 to-stone-900" />
+                  <div className="h-[clamp(4px,1vw,16px)] w-[clamp(58px,8.5vw,146px)] bg-gradient-to-b from-stone-500 to-stone-700" />
+                  <div className="h-[clamp(6px,1.3vw,22px)] w-[clamp(76px,11vw,198px)] rounded-b-sm bg-gradient-to-b from-stone-700 to-stone-900" />
                 </div>
               </div>
 
