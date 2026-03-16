@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { Search, X } from 'lucide-react';
 import { CEMETERY_DATA as cemeteryData, type Grave } from '@/lib/cemetery-data';
+import { IncenseOffering } from './incense-offering';
+import { BackgroundMusic } from './background-music';
 
 
 export default function CemeteryApp() {
@@ -34,43 +36,93 @@ export default function CemeteryApp() {
 
       <div className="relative z-10 mx-auto w-full max-w-[1920px] p-3 sm:p-4 md:p-6">
       {/* Header */}
-      <div className="mb-6 rounded-2xl border border-blue-200 bg-blue-100 p-4 shadow-sm md:mb-8 md:p-6">
-        <div className="mx-auto flex w-full flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            <img
-              src="/Logo-Doan-Thanh-NIen-Cong-San-Ho-Chi-Minh.webp"
-              alt="Logo Đoàn Thanh niên Cộng sản Hồ Chí Minh"
-              className="h-9 w-9 object-contain sm:h-10 sm:w-10"
-            />
-            <img
-              src="/logo-thanh-nien-viet-nam.webp"
-              alt="Logo Thanh niên Việt Nam"
-              className="h-9 w-9 rounded-full object-contain sm:h-10 sm:w-10"
-            />
-            <img
-              src="/huy_hieu_doi_TNTP_HCM.png"
-              alt="Logo Đội Thiếu niên Tiền phong"
-              className="h-9 w-9 object-contain sm:h-10 sm:w-10"
-            />
-            <h1 className="text-left text-base font-bold uppercase tracking-wide text-red-800 sm:text-xl lg:text-3xl">
-              Nghĩa Trang Liệt Sĩ Xã Vĩnh Thanh
-            </h1>
-          </div>
-
-          <div className="w-full lg:max-w-md">
-            <div className="relative">
-              <Search className="absolute left-3 top-3 w-5 h-5 text-slate-500" />
-              <input
-                type="text"
-                placeholder="Tìm kiếm theo tên, quê quán, năm..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 bg-white py-3 pl-10 pr-4 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+      <div className="mb-4 rounded-2xl border border-blue-200 bg-blue-100 p-4 shadow-sm md:p-6">
+        <div className="mx-auto grid w-full gap-4 lg:grid-cols-[auto_1fr_auto] lg:items-center">
+          {/* Logo bên trái */}
+          <div className="flex flex-col items-center lg:items-start">
+            <div className="flex items-center justify-center gap-2">
+              <img
+                src="/Logo-Doan-Thanh-NIen-Cong-San-Ho-Chi-Minh.webp"
+                alt="Logo Đoàn Thanh niên Cộng sản Hồ Chí Minh"
+                className="h-10 w-10 object-contain sm:h-12 sm:w-12"
+              />
+              <img
+                src="/logo-thanh-nien-viet-nam.webp"
+                alt="Logo Thanh niên Việt Nam"
+                className="h-10 w-10 rounded-full object-contain sm:h-12 sm:w-12"
+              />
+              <img
+                src="/huy_hieu_doi_TNTP_HCM.png"
+                alt="Logo Đội Thiếu niên Tiền phong"
+                className="h-10 w-10 object-contain sm:h-12 sm:w-12"
               />
             </div>
-            <p className="mt-2 text-center text-xs text-slate-500 md:text-left">
-              Hiển thị {filteredData.length} / {cemeteryData.length} mộ
+            <p className="mt-1 w-full text-center text-xs font-semibold uppercase tracking-wide text-red-700 sm:text-sm">
+              Xã Vĩnh Thanh
             </p>
+          </div>
+
+          {/* Tiêu đề ở giữa */}
+          <h1 className="text-center text-lg font-bold uppercase tracking-wide text-red-800 sm:text-2xl lg:text-3xl">
+            Bản Đồ Số Hóa Nghĩa Trang Liệt Sĩ Xã Vĩnh Thanh
+          </h1>
+
+          {/* Tiêu ngữ bên phải */}
+          <div className="w-full max-w-sm relative overflow-hidden rounded-xl border-2 border-red-200 bg-gradient-to-br from-red-50 via-amber-50 to-yellow-50 p-3 shadow-lg lg:p-4">
+            {/* Decorative elements */}
+            <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-red-100/50" />
+            <div className="absolute -bottom-2 -left-2 h-12 w-12 rounded-full bg-amber-100/50" />
+            
+            <div className="relative text-center">
+              
+              {/* Title */}
+              <p className="text-sm font-bold uppercase tracking-wide text-red-800">
+                Đoàn TNCS Hồ Chí Minh xã Vĩnh Thanh
+              </p>
+              
+              {/* Star */}
+              <span className="text-lg text-amber-500">★</span>
+              
+              {/* Content */}
+              <p className="mt-2 text-xs leading-relaxed text-slate-700">
+                <span className="font-semibold text-red-700">Công trình phần việc thanh niên</span>
+                <br />
+                Chào mừng kỷ niệm <span className="font-bold text-red-800">95 năm</span> ngày thành lập Đoàn TNCS Hồ Chí Minh
+                <br />
+                <span className="text-amber-700">(26/3/1931 - 26/3/2026)</span>
+              </p>
+              
+              {/* Second paragraph */}
+              <p className="mt-3 text-xs leading-relaxed text-slate-700">
+                Chào mừng thành công của bầu cử Đại biểu Quốc hội khóa XVI và Đại biểu HĐND các cấp nhiệm kỳ 2026 - 2031
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      <div className="mb-6 rounded-xl border border-slate-200 bg-white/90 p-3 shadow-sm backdrop-blur-sm md:mb-8 md:p-4">
+        <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
+          <div className="flex items-center gap-2 text-sm font-medium text-slate-600">
+            <Search className="h-4 w-4" />
+            <span>Tra cứu thông tin liệt sĩ</span>
+          </div>
+          <div className="w-full sm:max-w-md">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Nhập tên, quê quán, năm sinh/mất..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full rounded-lg border border-slate-300 bg-white py-2.5 pl-10 pr-4 text-sm shadow-sm transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1.5 text-xs font-medium text-blue-700">
+            <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+            {filteredData.length} / {cemeteryData.length} phần mộ
           </div>
         </div>
       </div>
@@ -92,7 +144,7 @@ export default function CemeteryApp() {
               {/* Giant central monument */}
               <div
                 className="relative z-20 flex items-center justify-center"
-                style={{ gridColumn: '13 / 16', gridRow: '1 / 3' }}
+                style={{ gridColumn: '13 / 16', gridRow: '2 / 3' }}
               >
                 <img
                   src="/monument.svg"
@@ -187,6 +239,9 @@ export default function CemeteryApp() {
                 <div className="mt-4 rounded-lg border border-stone-200 bg-stone-50 p-3 text-xs text-slate-600">
                   Mã phần mộ: <span className="font-semibold text-slate-800">{selectedGrave.id}</span>
                 </div>
+
+                {/* Thắp Hương */}
+                <IncenseOffering graveId={selectedGrave.id} graveName={selectedGrave.name} />
               </div>
             </div>
           </div>
@@ -200,6 +255,9 @@ export default function CemeteryApp() {
         </p>
       </div>
       </div>
+
+      {/* Nhạc nền tưởng niệm */}
+      <BackgroundMusic />
     </div>
   );
 }
