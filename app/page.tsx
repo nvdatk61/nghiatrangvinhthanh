@@ -12,17 +12,17 @@ export default function Page() {
             <img
               src="/Logo-Doan-Thanh-NIen-Cong-San-Ho-Chi-Minh.webp"
               alt="Logo Đoàn Thanh niên Cộng sản Hồ Chí Minh"
-              className="h-12 w-12 rounded-full border border-white/40 bg-white/95 object-cover"
+              className="h-12 w-12 object-contain"
             />
             <img
               src="/logo-thanh-nien-viet-nam.webp"
               alt="Logo Thanh niên Việt Nam"
-              className="h-12 w-12 rounded-full border border-white/40 bg-white/95 object-cover"
+              className="h-12 w-12 rounded-full object-contain"
             />
             <img
               src="/huy_hieu_doi_TNTP_HCM.png"
               alt="Logo Đội Thiếu niên Tiền phong"
-              className="h-12 w-12 rounded-full border border-white/40 bg-white/95 object-cover"
+              className="h-12 w-12 object-contain"
             />
           </div>
 

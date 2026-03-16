@@ -40,17 +40,17 @@ export default function CemeteryApp() {
             <img
               src="/Logo-Doan-Thanh-NIen-Cong-San-Ho-Chi-Minh.webp"
               alt="Logo Đoàn Thanh niên Cộng sản Hồ Chí Minh"
-              className="h-9 w-9 rounded-full object-cover sm:h-10 sm:w-10"
+              className="h-9 w-9 object-contain sm:h-10 sm:w-10"
             />
             <img
               src="/logo-thanh-nien-viet-nam.webp"
               alt="Logo Thanh niên Việt Nam"
-              className="h-9 w-9 rounded-full object-cover sm:h-10 sm:w-10"
+              className="h-9 w-9 rounded-full object-contain sm:h-10 sm:w-10"
             />
             <img
               src="/huy_hieu_doi_TNTP_HCM.png"
               alt="Logo Đội Thiếu niên Tiền phong"
-              className="h-9 w-9 rounded-full object-cover sm:h-10 sm:w-10"
+              className="h-9 w-9 object-contain sm:h-10 sm:w-10"
             />
             <h1 className="text-left text-base font-bold uppercase tracking-wide text-red-800 sm:text-xl lg:text-3xl">
               Nghĩa Trang Liệt Sĩ Xã Vĩnh Thanh
@@ -78,21 +78,16 @@ export default function CemeteryApp() {
       {/* Main Content */}
       <div>
         {/* Cemetery Grid */}
-        <div className="overflow-hidden rounded-2xl border-2 border-blue-200 bg-white p-2 shadow-lg sm:p-4 md:p-6">
+        <div className="overflow-x-auto rounded-2xl border-2 border-blue-200 bg-white p-2 shadow-lg sm:p-4 md:overflow-hidden md:p-6">
           <div
-            className="relative overflow-hidden rounded-xl p-2 sm:p-3 md:p-4"
-            style={{ backgroundImage: "url('/background.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+            className="relative min-w-[900px] overflow-hidden rounded-xl bg-blue-100 p-2 sm:p-3 md:min-w-0 md:p-4"
           >
             {/* <div className="absolute left-[50%] top-0 bottom-0 w-64 bg-blue-200/50 -translate-x-1/2 border-x border-blue-300/50" /> */}
             <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(23, minmax(0, 1fr))',
-              gridAutoRows: 'clamp(46px, 4.8vw, 90px)',
-              gap: 'clamp(1px, 0.25vw, 4px)',
-              width: '100%',
-              padding: '0 2px'
-            }}
+              className="grid w-full grid-cols-[repeat(23,minmax(0,1fr))] gap-[3px] p-[0_2px] md:gap-[clamp(1px,0.25vw,4px)]"
+              style={{
+                gridAutoRows: 'clamp(55px, 4.8vw, 90px)',
+              }}
             >
               {/* Giant central monument */}
               <div
@@ -122,14 +117,14 @@ export default function CemeteryApp() {
                     <svg
                       viewBox="0 0 24 24"
                       aria-hidden="true"
-                      className="h-2.5 w-2.5 fill-amber-400 sm:h-3 sm:w-3"
+                      className="h-2.5 w-2.5 flex-shrink-0 fill-amber-400 sm:h-3 sm:w-3"
                     >
                       <path d="M12 2.5l2.8 5.8 6.4.9-4.6 4.5 1.1 6.4L12 17.2 6.3 20.1l1.1-6.4-4.6-4.5 6.4-.9L12 2.5z" />
                     </svg>
-                    <p className={`mt-1 break-words px-0.5 text-center font-bold leading-[1.1] text-amber-100 text-[clamp(6px,0.62vw,10px)] ${grave.name === 'Vô Danh' ? 'italic' : ''}`}>
+                    <p className={`flex-1 overflow-hidden px-0.5 text-center font-bold leading-[1.1] text-amber-100 text-[clamp(5px,0.52vw,9px)] ${grave.name === 'Vô Danh' ? 'italic' : ''}`}>
                       {grave.name}
                     </p>
-                    <div className="mt-auto w-full border-t border-slate-600 pt-1 text-center text-amber-100/70 text-[clamp(5px,0.52vw,8.5px)]">
+                    <div className="mt-auto w-full flex-shrink-0 border-t border-slate-600 pt-1 text-center text-amber-100/70 text-[clamp(4px,0.45vw,7.5px)]">
                       {grave.birthYear} - {grave.deathYear}
                     </div>
                   </button>
