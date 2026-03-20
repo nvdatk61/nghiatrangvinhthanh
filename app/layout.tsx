@@ -15,15 +15,15 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
+        url: '/Logo-Doan-Thanh-NIen-Cong-San-Ho-Chi-Minh.webp',
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: '/icon-dark-32x32.png',
+        url: '/Logo-Doan-Thanh-NIen-Cong-San-Ho-Chi-Minh.webp',
         media: '(prefers-color-scheme: dark)',
       },
       {
-        url: '/icon.svg',
+        url: '/Logo-Doan-Thanh-NIen-Cong-San-Ho-Chi-Minh.webp',
         type: 'image/svg+xml',
       },
     ],
