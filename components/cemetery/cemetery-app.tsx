@@ -64,7 +64,7 @@ export default function CemeteryApp() {
 
           {/* Tiêu đề ở giữa */}
           <h1 className="text-center text-lg font-bold uppercase tracking-wide text-red-800 sm:text-2xl lg:text-3xl">
-            Bản Đồ Số Hóa Nghĩa Trang Liệt Sĩ Xã Vĩnh Thanh
+            Bản Đồ Số Hóa Nghĩa Trang Liệt Sĩ <span className="whitespace-nowrap">Xã Vĩnh Thanh</span>
           </h1>
 
           {/* Tiêu ngữ bên phải */}
@@ -77,7 +77,7 @@ export default function CemeteryApp() {
               
               {/* Title */}
               <p className="text-sm font-bold uppercase tracking-wide text-red-800">
-                Đoàn TNCS Hồ Chí Minh xã Vĩnh Thanh
+                Đoàn TNCS Hồ Chí Minh <span className="whitespace-nowrap">xã Vĩnh Thanh</span>
               </p>
               
               {/* Star */}

@@ -12,7 +12,6 @@ export function BackgroundMusic({ src = '/sounds/memorial-music.mp3' }: Backgrou
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.3);
   const [showControls, setShowControls] = useState(false);
-  const [showPrompt, setShowPrompt] = useState(true);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -21,23 +20,34 @@ export function BackgroundMusic({ src = '/sounds/memorial-music.mp3' }: Backgrou
     }
   }, [volume]);
 
-  // Auto-play khi người dùng click bất kỳ đâu trên trang
+  // Auto-play ngay khi component mount
   useEffect(() => {
-    const handleFirstInteraction = () => {
+    const attemptAutoPlay = () => {
       if (audioRef.current && !isPlaying) {
         audioRef.current.play().then(() => {
           setIsPlaying(true);
-          setShowPrompt(false);
         }).catch(() => {
-          // Autoplay vẫn bị chặn
+          // Nếu autoplay bị chặn, thử lại khi user tương tác
+          const handleInteraction = () => {
+            if (audioRef.current && !isPlaying) {
+              audioRef.current.play().then(() => {
+                setIsPlaying(true);
+              }).catch(() => {});
+            }
+            document.removeEventListener('click', handleInteraction);
+            document.removeEventListener('touchstart', handleInteraction);
+            document.removeEventListener('scroll', handleInteraction);
+          };
+          document.addEventListener('click', handleInteraction);
+          document.addEventListener('touchstart', handleInteraction);
+          document.addEventListener('scroll', handleInteraction);
         });
       }
-      document.removeEventListener('click', handleFirstInteraction);
     };
-
-    document.addEventListener('click', handleFirstInteraction);
-    return () => document.removeEventListener('click', handleFirstInteraction);
-  }, [isPlaying]);
+    
+    // Thử autoplay ngay lập tức
+    attemptAutoPlay();
+  }, []);
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -47,7 +57,6 @@ export function BackgroundMusic({ src = '/sounds/memorial-music.mp3' }: Backgrou
       } else {
         audioRef.current.play().then(() => {
           setIsPlaying(true);
-          setShowPrompt(false);
         }).catch(() => {});
       }
     }
@@ -63,16 +72,7 @@ export function BackgroundMusic({ src = '/sounds/memorial-music.mp3' }: Backgrou
 
   return (
     <>
-      <audio ref={audioRef} src={src} preload="auto" />
-      
-      {/* Prompt nhắc nhở click để phát nhạc */}
-      {showPrompt && !isPlaying && (
-        <div className="fixed bottom-20 right-4 z-50 animate-bounce">
-          <div className="rounded-xl bg-amber-500 px-4 py-2 text-sm font-medium text-white shadow-lg">
-            👆 Click để phát nhạc tưởng niệm
-          </div>
-        </div>
-      )}
+      <audio ref={audioRef} src={src} preload="auto" autoPlay loop />
       
       <div className="fixed bottom-4 right-4 z-50">
         <div 

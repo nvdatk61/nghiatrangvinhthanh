@@ -27,14 +27,14 @@ export default function Page() {
           </div>
 
           <p className="text-center text-sm font-semibold uppercase tracking-[0.24em] text-cyan-100">
-            CTPV THANH NIÊN XÃ VĨNH THANH
+            CTPV THANH NIÊN <span className="whitespace-nowrap">XÃ VĨNH THANH</span>
           </p>
           <p className="mt-3 text-center text-base font-semibold leading-relaxed text-amber-100 sm:text-lg">
             Chào mừng bầu cử Đại biểu Quốc hội khóa XVI và Đại biểu HĐND các cấp nhiệm kỳ 2026 - 2031; chào mừng kỷ niệm 95 năm Ngày thành lập Đoàn TNCS Hồ Chí Minh (26/3/1931 - 26/3/2026).
           </p>
 
           <div className="mt-8 rounded-2xl border border-white/40 bg-white/10 p-4 text-center sm:p-5">
-            <h2 className="text-xl font-bold text-white sm:text-2xl">Nghĩa Trang Liệt Sĩ Xã Vĩnh Thanh</h2>
+            <h2 className="text-xl font-bold text-white sm:text-2xl">Nghĩa Trang Liệt Sĩ <span className="whitespace-nowrap">Xã Vĩnh Thanh</span></h2>
             <p className="mt-2 text-sm text-cyan-50/90 sm:text-base">
               Tra cứu thông tin phần mộ và vị trí trực quan trên bản đồ nghĩa trang.
             </p>
@@ -42,7 +42,7 @@ export default function Page() {
               href="/vinh-thanh"
               className="mt-5 inline-flex items-center justify-center rounded-xl bg-amber-400 px-6 py-3 text-sm font-bold uppercase tracking-wide text-slate-900 transition hover:scale-[1.02] hover:bg-amber-300"
             >
-              Vào xem nghĩa trang Vĩnh Thanh
+              <p>Vào xem nghĩa trang <span className="whitespace-nowrap">xã Vĩnh Thanh</span></p>
             </Link>
           </div>
 
@@ -55,7 +55,7 @@ export default function Page() {
             <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
             </svg>
-            Fanpage Xã Vĩnh Thanh
+            Fanpage Đoàn Xã Vĩnh Thanh
           </a>
         </div>
       </section>
