@@ -85,16 +85,11 @@ export default function CemeteryApp() {
               
               {/* Content */}
               <p className="mt-2 text-xs leading-relaxed text-slate-700">
-                <span className="font-semibold text-red-700">Công trình phần việc thanh niên</span>
+                <span className="font-semibold text-red-700">CÔNG TRÌNH THANH NIÊN</span>
                 <br />
-                Chào mừng kỷ niệm <span className="font-bold text-red-800">95 năm</span> ngày thành lập Đoàn TNCS Hồ Chí Minh
+                KỶ NIỆM <span className="font-bold text-red-800">79 NĂM</span> NGÀY THƯƠNG BINH - LIỆT SỸ
                 <br />
-                <span className="text-amber-700">(26/3/1931 - 26/3/2026)</span>
-              </p>
-              
-              {/* Second paragraph */}
-              <p className="mt-3 text-xs leading-relaxed text-slate-700">
-                Chào mừng thành công của bầu cử Đại biểu Quốc hội khóa XVI và Đại biểu HĐND các cấp nhiệm kỳ 2026 - 2031
+                <span className="text-amber-700">(27/7/1947 - 27/7/2026)</span>
               </p>
             </div>
           </div>

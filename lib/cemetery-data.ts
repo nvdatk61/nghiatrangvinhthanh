@@ -139,6 +139,7 @@ export const CEMETERY_DATA: Grave[] = [
   { "id": "9-22", "name": "Nguyễn Quốc Hải", "hometown": "Hải Bối", "fullBirth": "Sinh 1929", "fullDeath": "Mất 18/10/1969", "birthYear": "1929", "deathYear": "1969", "row": 9, "col": 22 },
   { "id": "10-1", "name": "Kiều Văn Hiển", "hometown": "Hải Bối", "fullBirth": "Sinh 1924", "fullDeath": "Mất 29/03/1954", "birthYear": "1924", "deathYear": "1954", "row": 10, "col": 1 },
   { "id": "10-2", "name": "Nguyễn Đăng Gia", "hometown": "Hải Bối", "fullBirth": "Sinh 1920", "fullDeath": "Mất 8/1949", "birthYear": "1920", "deathYear": "1949", "row": 10, "col": 2 },
+  { "id": "10-3", "name": "Nguyễn Quốc Khảo", "hometown": "Hải Bối", "fullBirth": "Sinh 1916", "fullDeath": "Mất 8/1947", "birthYear": "1916", "deathYear": "1947", "row": 10, "col": 3 },
   { "id": "10-4", "name": "Nguyễn Hữu Còn", "hometown": "Hải Bối", "fullBirth": "Sinh 1931", "fullDeath": "Mất 09/04/1970", "birthYear": "1931", "deathYear": "1970", "row": 10, "col": 4 },
   { "id": "10-5", "name": "Nguyễn Hữu Lồ", "hometown": "Hải Bối", "fullBirth": "Sinh 1945", "fullDeath": "Mất 17/10/1972", "birthYear": "1945", "deathYear": "1972", "row": 10, "col": 5 },
   { "id": "10-6", "name": "Nguyễn Quốc Cống", "hometown": "Đồng Nhân", "fullBirth": "Sinh 1937", "fullDeath": "Mất 12/12/1968", "birthYear": "1937", "deathYear": "1968", "row": 10, "col": 6 },
